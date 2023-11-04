@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
                 district: req.body.district,
                 notificationtoken: req.body.notificationToken,
                 email: req.body.email,
-                password:encryptedPassword
+                pass:encryptedPassword
             });
             res.json({
                 status: "ok",

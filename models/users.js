@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const UsersScheme = mongoose.Schema({
-    lastname:{
-        type: String,
-        default: '',
-    },
-    firstname:{
+    fullname:{
         type: String,
         default: '',
     },
@@ -18,6 +14,14 @@ const UsersScheme = mongoose.Schema({
         default: '',
     },
     phone:{
+        type: String,
+        default: '',
+    },
+    district:{
+        type: String,
+        default: '',
+    },
+    notificationtoken:{
         type: String,
         default: '',
     },
