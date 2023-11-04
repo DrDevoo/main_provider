@@ -101,6 +101,7 @@ router.post("/login", async (req, res) => {
     const email = req.body.email
     const pass = req.body.password
     const user = await Users.findOne({ email });
+    console.log(user)
     try {
         if (user && (await bcrypt.compare(pass, user.pass))) {
             x = true
