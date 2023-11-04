@@ -103,7 +103,8 @@ router.post("/login", async (req, res) => {
     const user = await Users.findOne({ email });
     try {
         if (user && (await bcrypt.compare(pass, user.pass))) {
-            if (user.active == "true") {
+            x = true
+            if (x == true) {
                  const token = jwt.sign({
                 id: user._id,
                 roles: user.role,
