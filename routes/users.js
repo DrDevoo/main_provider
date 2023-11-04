@@ -100,11 +100,9 @@ router.post("/verify", async (req, res) => {
 router.post("/login", async (req, res) => {
     const email = req.body.email
     const pass = req.body.password
-    console.log(email)
-    console.log(pass)
     const user = await Users.findOne({ email });
     try {
-        if (user && (await bcrypt.compare(pass, user.password))) {
+        if (user && (await bcrypt.compare(pass, user.pass))) {
             if (user.active == "true") {
                  const token = jwt.sign({
                 id: user._id,
