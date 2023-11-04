@@ -29,6 +29,10 @@ const UsersScheme = mongoose.Schema({
         type: String,
         default: '',
     },
+    verifyToken:{
+        type: String,
+        default: '',
+    },
 });
 
 module.exports = mongoose.model('Users', UsersScheme);

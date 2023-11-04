@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
                 status: "ok",
                 user: newuser
             });
-            //Mail.sendVerifyMail(newuser)
+            Mail.sendVerifyMail(newuser)
         }
     }catch(err){
         res.json({ message: err });

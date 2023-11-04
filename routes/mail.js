@@ -37,7 +37,7 @@ async function sendVerifyMail(user) {
         message = {
           from: "no-reply@hengersordiak.hu",
           to: user.email,
-          subject: "E-mail cím megerősítése",
+          subject: "NotifyMate E-mail cím megerősítése",
           template: 'verify',
           context:{
             email: user.email,

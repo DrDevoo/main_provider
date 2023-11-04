@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
+    xmlns:o="urn:schemas-microsoft-com:office:office">
+
+<head>
+    <meta charset="utf-8"> <!-- utf-8 works for most cases -->
+    <meta name="viewport" content="width=device-width"> <!-- Forcing initial-scale shouldn't be necessary -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- Use the latest (edge) version of IE rendering engine -->
+    <meta name="x-apple-disable-message-reformatting"> <!-- Disable auto-scale in iOS 10 Mail entirely -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+            background: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        main {
+            padding-top: 1.5rem;
+            width: 500px;
+            height: 100vh;
+            background-color: white;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30pt;
+        }
+
+        h3 {
+            font-weight: 100;
+            text-align: center;
+        }
+
+        .w {
+            color: gray;
+            text-align: center;
+            font-size: 9pt;
+        }
+
+        .token {
+            text-align: center;
+            font-size: 20pt;
+            letter-spacing: 7px;
+        }
+        main{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div
+        style="display: none; font-size: 1px;max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+        &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+    </div>
+    <main>
+        <div>
+            <h1>Hengersor <br> Diák tehetségkutató</h1>
+        </div>
+        <div>
+            <h3>Kérlek az alábbi kóddal igazold vissza a fiók regisztrációd az oldalon</h3>
+        </div>
+        <br><br>
+        <div>
+            <div>
+                <h4>Fiók adataid:</h4><span>{{fullname}} • {{email}}</span>
+            </div>
+            <div>
+                <h4>A 6 jegyü vissza igazoló kódod:</h4>
+                <p class="token">{{token}}</p>
+            </div>
+        </div>
+        <br><br><br><br><br><br>
+        <div>
+            <p class="w">Kérlek ne válaszolj erre az emailre ez egy automatikus rendzser üzenet!</p>
+        </div>
+    </main>
+</body>
+
+</html>
