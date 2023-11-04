@@ -12,10 +12,7 @@ router.post("/register", async (req, res) => {
     try {
         console.log(req.body)
         const oldmail = req.body.email
-        try {
-             var oldUser = await Users.findOne({ email:oldmail });
-        } catch (e) { }
-       
+        const oldUser = await Users.findOne({ email:oldmail });
         if (oldUser) {
             return res.send({ok: false,msg: "isreged"});
         }else {
