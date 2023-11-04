@@ -100,6 +100,8 @@ router.post("/verify", async (req, res) => {
 router.post("/login", async (req, res) => {
     const email = req.body.email
     const pass = req.body.password
+    console.log(email)
+    console.log(pass)
     const user = await Users.findOne({ email });
     try {
         if (user && (await bcrypt.compare(pass, user.password))) {
@@ -117,7 +119,7 @@ router.post("/login", async (req, res) => {
                 res.send({
                 ok: false,
                 token: null,
-                    msg: "noverfyed",
+                msg: "noverfyed",
                 id: user._id
             });
             }

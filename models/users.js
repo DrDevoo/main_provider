@@ -33,6 +33,10 @@ const UsersScheme = mongoose.Schema({
         type: String,
         default: '',
     },
+    active:{
+        type: String,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model('Users', UsersScheme);
