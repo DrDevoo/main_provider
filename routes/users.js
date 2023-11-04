@@ -100,19 +100,16 @@ router.post("/verify", async (req, res) => {
 router.post("/login", async (req, res) => {
     const email = req.body.email
     const pass = req.body.password
+    console.log(email)
     const user = await Users.findOne({ email });
     console.log(user)
     try {
         if (user && (await bcrypt.compare(pass, user.pass))) {
             x = true
-            if (x == true) {
-                 const token = jwt.sign({
-                id: user._id,
-                roles: user.role,
-            }, "jwtPrivateKey", { expiresIn: "8h" });
+            if (x == true) { 
             res.send({
                 ok: true,
-                token: token,
+                token: 0,
                 user:user
             });
             } else {
