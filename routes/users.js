@@ -152,6 +152,15 @@ router.post("/login", async (req, res) => {
     }
 })
 
+router.get("/getuser/:id", async (req, res) => {
+    try{
+      const user = await Users.findById(req.params.id);
+      res.json(user);
+  }catch(err){
+      res.json({ message: err });
+  }
+});
+
 router.get("/", async (req, res) => {
     res.send({
         ok: true,
