@@ -45,6 +45,22 @@ const UsersScheme = mongoose.Schema({
         type: String,
         default: false,
     },
+    job:{
+        type: String,
+        default: '',
+    },
+    city:{
+        type: String,
+        default: '',
+    },
+    addresse:{
+        type: String,
+        default: '',
+    },
+    street:{
+        type: String,
+        default: '',
+    },
 });
 
 module.exports = mongoose.model('Users', UsersScheme);
