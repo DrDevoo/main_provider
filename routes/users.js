@@ -128,7 +128,7 @@ router.post("/login", async (req, res) => {
             if (user.active == "true") {
             res.send({
                 ok: true,
-                token: token,
+                token: 0,
                 user:user
             });
             } else {
