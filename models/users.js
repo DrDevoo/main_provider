@@ -17,6 +17,14 @@ const UsersScheme = mongoose.Schema({
         type: String,
         default: '',
     },
+    acctype:{
+        type: String,
+        default: '',
+    },
+    profileImg:{
+        type: String,
+        default: '',
+    },
     district:{
         type: String,
         default: '',

@@ -17,7 +17,9 @@ router.post("/register", async (req, res) => {
             return res.send({ok: false,msg: "isreged"});
         }else {
             encryptedPassword = await bcrypt.hash(req.body.password, 10);
-            const newuser = await Users.create({  
+            if (req.body.acctype == "normal") {
+                var newuser = await Users.create({  
+                acctype: req.body.acctype,
                 fullname: req.body.fullname,
                 username: req.body.username,
                 phone: req.body.phone,
@@ -26,6 +28,22 @@ router.post("/register", async (req, res) => {
                 email: req.body.email,
                 pass:encryptedPassword
             });
+            } else {
+                var newuser = await Users.create({  
+                acctype: req.body.acctype,
+                fullname: req.body.fullname,
+                username: req.body.username,
+                phone: req.body.phone,
+                city: req.body.city,
+                street: req.body.street,
+                addresse: req.body.addresse,
+                job: req.body.job,
+                notificationtoken: req.body.notificationToken,
+                email: req.body.email,
+                pass:encryptedPassword
+            });
+            }
+
             res.json({
                 status: "ok",
                 user: newuser
@@ -39,12 +57,16 @@ router.post("/register", async (req, res) => {
 })
 
 //UploadimgTESZT
-router.post("/sendimg",upload.single('file'), async (req, res) => {
+router.post("/sendimg/:id",upload.single('file'), async (req, res) => {
     try {
+        const userid = req.params.id
         const file = req.file;
         console.log(file)
         const result = await uploadFile(file);
-        
+         await Users.updateOne(    
+    { _id: userid},
+    { $set: {profileImg: result.Key}}
+ );
         res.json({
             result
         });
