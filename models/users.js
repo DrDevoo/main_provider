@@ -23,7 +23,8 @@ const UsersScheme = mongoose.Schema({
     },
     profileImg:{
         type: String,
-        default: '',
+        default: 'none',
+        required: true
     },
     district:{
         type: String,
