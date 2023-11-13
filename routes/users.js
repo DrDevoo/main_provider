@@ -167,4 +167,15 @@ router.get("/", async (req, res) => {
     });
 });
 
+router.get("/", async (req, res) => {
+   
+});
+router.get("/getallbusinessacc", async (req, res) => {
+    const all = await Users.find({active:true,acctype:"business"});
+    res.send({
+        ok: true,
+        list: all
+    });
+});
+
 module.exports = router;
