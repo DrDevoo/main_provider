@@ -6,6 +6,7 @@ const https = require('https');
 const http = require('http');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const socketIO = require('socket.io');
 
 //uses
 require('dotenv').config();
@@ -46,3 +47,50 @@ httpsServer.listen(400, () => {
 } catch (e) {
   console.log("HTTPS kapcsolat nem lehetséges")
 }
+const Chat = require('./chatmodel');
+const io = socketIO(httpServer,{
+  cors: {
+      origin: "http://localhost:450",
+      credentials: true,
+  },
+});
+
+const users = {};
+
+io.on('connection', (socket) => {
+  console.log('User connected');
+
+  socket.on('login', (userId) => {
+    users[userId] = socket.id;
+    io.emit('update users', Object.keys(users));
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+    const disconnectedUserId = Object.keys(users).find((key) => users[key] === socket.id);
+    if (disconnectedUserId) {
+      delete users[disconnectedUserId];
+      io.emit('update users', Object.keys(users));
+    }
+  });
+
+  socket.on('private message', async ({ senderId, receiverId, message }) => {
+    const receiverSocketId = users[receiverId];
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit('private message', { senderId, message });
+
+      // Mentjük a beszélgetést a MongoDB adatbázisba
+      const chat = new Chat({ senderId, receiverId, message });
+      await chat.save();
+    }
+  });
+
+  socket.on('get conversation', async ({ userId1, userId2 }) => {
+    try {
+      const conversation = await Chat.getConversation(userId1, userId2);
+      socket.emit('conversation', conversation);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
