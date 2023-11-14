@@ -21,9 +21,11 @@ mongoose.connect(
 
 //Kapcsolt komponensek
 const usersRoute = require('./routes/users');
+const notifRoute = require('./routes/notifications');
 
 //Kulso komponensel hasznalata
 app.use('/users', usersRoute)
+app.use('/notifications', notifRoute)
 
 //Autentikalt index oldal
 app.get("/", (req, res) => {
