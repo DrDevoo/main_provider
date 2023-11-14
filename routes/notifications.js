@@ -18,7 +18,7 @@ router.post("/addnotif/:userId/:message/:type", async (req, res) => {
         type,
     });
     await notification.save();
-    return notification;
+    res.json(notification)
   } catch (error) {
     console.error('Error creating notification:', error);
     throw error;
@@ -37,8 +37,7 @@ router.put("/markread/:notificationId", async (req, res) => {
     if (!notification) {
       throw new Error('Notification not found');
     }
-
-    return notification;
+    res.json(notification)
   } catch (error) {
     console.error('Error marking notification as read:', error);
     throw error;
@@ -73,12 +72,13 @@ router.get("/:userid/groupedByDate", async (req, res) => {
       (notification) => notification.createdAt < lastWeek
     );
 
-    return {
+    res.json({
       today: todayNotifications,
       yesterday: yesterdayNotifications,
       lastWeek: lastWeekNotifications,
       older: olderNotifications,
-    };
+    })
+
   } catch (error) {
     console.error('Error fetching notifications by date:', error);
     throw error;
