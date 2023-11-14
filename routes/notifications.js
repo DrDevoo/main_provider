@@ -47,9 +47,10 @@ router.put("/markread/:notificationId", async (req, res) => {
 
 router.get("/:userid/groupedByDate", async (req, res) => {
     const userId = req.params.userid
+    console.log(userId)
     try {
     const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
-
+    console.log(notifications)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
