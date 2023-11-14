@@ -30,6 +30,21 @@ app.get("/", (req, res) => {
   res.status(200).send("NOTIFYMATE API 0.0.1 🙌 ");
 });
 
+app.get('/conversations/:userId', async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const conversations = await Chat.find({ $or: [{ senderId: userId }, { receiverId: userId }] });
+    const participants = new Set(conversations.flatMap((chat) => [chat.senderId, chat.receiverId]));
+    const participantsArray = Array.from(participants).filter((participant) => participant !== userId);
+
+    res.json(participantsArray);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 //Szerver certificates
 const httpServer = http.createServer(app);
 //Az app nyitott portjai
