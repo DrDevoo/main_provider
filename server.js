@@ -29,7 +29,7 @@ app.use('/users', usersRoute)
 app.get("/", (req, res) => {
   res.status(200).send("NOTIFYMATE API 0.0.1 🙌 ");
 });
-const Users = require('../models/users');
+const Users = require('./models/users');
 
 app.get('/conversations/:userId', async (req, res) => {
   const userId = req.params.userId;
