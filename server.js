@@ -42,10 +42,14 @@ app.get('/conversations/:userId', async (req, res) => {
     // Lekérjük a felhasználók neveit és profilképeit
     const usersInfo = await Promise.all(participantsArray.map(async (participantId) => {
       const user = await Users.findById(participantId); // feltételezzük, hogy van egy User modellünk
+      const lastMessage = conversations
+        .filter((chat) => chat.senderId === participantId || chat.receiverId === participantId)
+        .sort((a, b) => b.timestamp - a.timestamp)[0]; // Az utolsó üzenet kiválasztása
       return {
         userId: user._id,
         username: user.username,
         profileImg: user.profileImg,
+        lastMessage: lastMessage ? lastMessage.message : "",
       };
     }));
 
