@@ -6,6 +6,9 @@ const Users = require('../models/users');
 const Mail = require('../routes/mail');
 const upload = multer({ dest: './uploaded/' })
 const { uploadFile } = require('./s3')
+
+const Notification = require('../models/notifications');
+
 router.post("/addnotif/:userId/:message/:type", async (req, res) => {
     const {userId, message, type} = req.params
     try {
