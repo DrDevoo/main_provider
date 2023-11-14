@@ -29,6 +29,7 @@ app.use('/users', usersRoute)
 app.get("/", (req, res) => {
   res.status(200).send("NOTIFYMATE API 0.0.1 🙌 ");
 });
+const Users = require('../models/users');
 
 app.get('/conversations/:userId', async (req, res) => {
   const userId = req.params.userId;
@@ -38,7 +39,17 @@ app.get('/conversations/:userId', async (req, res) => {
     const participants = new Set(conversations.flatMap((chat) => [chat.senderId, chat.receiverId]));
     const participantsArray = Array.from(participants).filter((participant) => participant !== userId);
 
-    res.json(participantsArray);
+    // Lekérjük a felhasználók neveit és profilképeit
+    const usersInfo = await Promise.all(participantsArray.map(async (participantId) => {
+      const user = await Users.findById(participantId); // feltételezzük, hogy van egy User modellünk
+      return {
+        userId: user._id,
+        username: user.username,
+        profileImg: user.profileImg,
+      };
+    }));
+
+    res.json(usersInfo);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
