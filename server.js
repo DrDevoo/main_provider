@@ -27,10 +27,7 @@ const notifRoute = require('./routes/notifications');
 app.use('/users', usersRoute)
 app.use('/notifications', notifRoute)
 
-//Autentikalt index oldal
-app.get("/", (req, res) => {
-  res.status(200).send("NOTIFYMATE API 0.0.1 🙌 ");
-});
+
 const Users = require('./models/users');
 
 app.get('/conversations/:userId', async (req, res, next) => {
@@ -47,7 +44,7 @@ app.get('/conversations/:userId', async (req, res, next) => {
       const lastMessage = conversations
         .filter((chat) => chat.senderId === participantId || chat.receiverId === participantId)
         .sort((a, b) => b.timestamp - a.timestamp)[0]; // Az utolsó üzenet kiválasztása
-      res.status(200).json({
+      res.json({
         userId: user._id,
         username: user.username,
         profileImg: user.profileImg,
@@ -58,7 +55,10 @@ app.get('/conversations/:userId', async (req, res, next) => {
     console.error(error);
   }
 });
-
+//Autentikalt index oldal
+app.get("/", (req, res) => {
+  res.status(200).send("NOTIFYMATE API 0.0.1 🙌 ");
+});
 //Szerver certificates
 const httpServer = http.createServer(app);
 //Az app nyitott portjai
