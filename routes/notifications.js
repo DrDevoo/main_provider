@@ -7,7 +7,7 @@ const Mail = require('../routes/mail');
 const upload = multer({ dest: './uploaded/' })
 const { uploadFile } = require('./s3')
 
-const Notification = require('../models/notifications');
+const notificationt = require('../models/notifications');
 
 router.post("/addnotif/:userId/:message/:type", async (req, res) => {
     const {userId, message, type} = req.params
@@ -49,7 +49,7 @@ router.get("/:userid/groupedByDate", async (req, res) => {
     const userId = req.params.userid
     console.log(userId)
     try {
-    const notifications = await Notification.find({ userId }).sort({ createdAt: -1 });
+    const notifications = await notificationt.find({ userId }).sort({ createdAt: -1 });
     console.log(notifications)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
