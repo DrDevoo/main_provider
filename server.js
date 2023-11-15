@@ -55,7 +55,7 @@ app.get('/conversations/:userId', async (req, res, next) => {
 
     // Egyszer küldjük el a választ, miután összegyűlt az összes ad
     console.log(participantsData)
-    res.json(participantsData);
+    res.json({data:participantsData});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
