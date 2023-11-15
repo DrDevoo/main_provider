@@ -35,7 +35,7 @@ const Users = require('./models/users');
 
 app.get('/conversations/:userId', async (req, res) => {
   const userId = req.params.userId;
-
+  console.log("Beszélgeto partnereket keresese: "+userId)
   try {
     const conversations = await Chat.find({ $or: [{ senderId: userId }, { receiverId: userId }] });
     const participants = new Set(conversations.flatMap((chat) => [chat.senderId, chat.receiverId]));
