@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 });
 const Users = require('./models/users');
 
-app.get('/conversations/:userId', async (req, res) => {
+app.get('/conversations/:userId', async (req, res, next) => {
   const userId = req.params.userId;
   console.log("Beszélgeto partnereket keresese: "+userId)
   try {
@@ -47,7 +47,7 @@ app.get('/conversations/:userId', async (req, res) => {
       const lastMessage = conversations
         .filter((chat) => chat.senderId === participantId || chat.receiverId === participantId)
         .sort((a, b) => b.timestamp - a.timestamp)[0]; // Az utolsó üzenet kiválasztása
-      res.json({
+      res.status(200).json({
         userId: user._id,
         username: user.username,
         profileImg: user.profileImg,
