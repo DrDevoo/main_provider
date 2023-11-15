@@ -32,27 +32,32 @@ const Users = require('./models/users');
 
 app.get('/conversations/:userId', async (req, res, next) => {
   const userId = req.params.userId;
-  console.log("Beszélgeto partnereket keresese: "+userId)
+  console.log("Beszélgető partnerek keresése: " + userId);
   try {
     const conversations = await Chat.find({ $or: [{ senderId: userId }, { receiverId: userId }] });
     const participants = new Set(conversations.flatMap((chat) => [chat.senderId, chat.receiverId]));
     const participantsArray = Array.from(participants).filter((participant) => participant !== userId);
 
     // Lekérjük a felhasználók neveit és profilképeit
-    await Promise.all(participantsArray.map(async (participantId) => {
-      const user = await Users.findById(participantId); // feltételezzük, hogy van egy User modellünk
+    const participantsData = await Promise.all(participantsArray.map(async (participantId) => {
+      const user = await Users.findById(participantId);
       const lastMessage = conversations
         .filter((chat) => chat.senderId === participantId || chat.receiverId === participantId)
-        .sort((a, b) => b.timestamp - a.timestamp)[0]; // Az utolsó üzenet kiválasztása
-      res.json({
+        .sort((a, b) => b.timestamp - a.timestamp)[0];
+
+      return {
         userId: user._id,
         username: user.username,
         profileImg: user.profileImg,
         lastMessage: lastMessage ? lastMessage.message : "",
-      });
+      };
     }));
+
+    // Egyszer küldjük el a választ, miután összegyűlt az összes adat
+    res.json(participantsData);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 //Autentikalt index oldal
