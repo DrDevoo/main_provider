@@ -110,7 +110,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('private message', async ({ senderId, receiverId, message, type, foglalt }) => {
-    console.log("Üzenet érkezett be: "+message+" Tól: "+senderId+" Neki: "+receiverId)
     const receiverSocketId = users[receiverId];
     if (receiverSocketId) {
       io.to(receiverSocketId).emit('private message', { senderId, message, type, foglalt });
