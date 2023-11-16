@@ -109,19 +109,19 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('private message', async ({ senderId, receiverId, message }) => {
+  socket.on('private message', async ({ senderId, receiverId, message, type, foglalt }) => {
     console.log("Üzenet érkezett be: "+message+" Tól: "+senderId+" Neki: "+receiverId)
     const receiverSocketId = users[receiverId];
     if (receiverSocketId) {
-      io.to(receiverSocketId).emit('private message', { senderId, message });
+      io.to(receiverSocketId).emit('private message', { senderId, message, type, foglalt });
 
       // Mentjük a beszélgetést a MongoDB adatbázisba
-      const chat = new Chat({ senderId, receiverId, message });
+      const chat = new Chat({ senderId, receiverId, message, type, foglalt });
       await chat.save();
     } else {
       console.log("NEM elérheto masik fel")
             // Mentjük a beszélgetést a MongoDB adatbázisba
-      const chat = new Chat({ senderId, receiverId, message });
+      const chat = new Chat({ senderId, receiverId, message, type, foglalt });
       await chat.save();
     }
   });
